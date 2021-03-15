@@ -1,4 +1,3 @@
-import Redux from 'redux';
 
 let initialState = {
     searchKeyword: '',

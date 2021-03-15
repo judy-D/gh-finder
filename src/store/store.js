@@ -1,20 +1,20 @@
-import { createStore, combineReducers } from "redux";
+import { createStore } from "redux";
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import rootReducer from "../reducres/reducres";
 
 function configureStore(initialState = {}) {
-    const reducer = combineReducers({
-      form: persistReducer(
-        {
-          key: "form", // key for localStorage key, will be: "persist:form"
-          storage,
-          debug: true,
-          blacklist: ['SET_LOADING','SET_ERROR'],
-        },
-        rootReducer
-      ),
-    });
+    // const reducer = combineReducers({
+    //   form: persistReducer(
+    //     {
+    //       key: "form", // key for localStorage key, will be: "persist:form"
+    //       storage,
+    //       debug: true,
+    //       blacklist: ['SET_LOADING','SET_ERROR'],
+    //     },
+    //     rootReducer
+    //   ),
+    // });
 
 
 const store = createStore(persistReducer({

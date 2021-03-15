@@ -4,22 +4,14 @@ import { Waypoint } from "react-waypoint";
 import  useDebounced  from '../components/debounce/debounced';
 import axios from 'axios';
 
-const Repositories = ({ repos, dispatch, keyword, option, loading, error }) => {
+const Repositories = ({ githubClientId, githubClientSecret, repos, dispatch, keyword, option, loading, error }) => {
     const [repositories, setRepositories] = useState([]);
     const [page, setPage] = useState(1);
     const [hasNextPage, setHasNextPage] = useState(true);
     const ITEMS_PER_PAGE = 20;
-    let githubClientId;
-    let githubClientSecret;
-    let isLoading;
-    if (process.env.NODE_ENV !== 'production') {
-        githubClientId = process.env.REACT_APP_GITHUB_CLIENT_ID;
-        githubClientSecret = process.env.REACT_APP_GITHUB_CLIENT_SECRET;
-      } else {
-        githubClientId = process.env.GITHUB_CLIENT_ID;
-        githubClientSecret = process.env.GITHUB_CLIENT_SECRET;
-      }
-
+  
+      let isLoading;
+  
       let debounced = useDebounced(keyword);
 
       const setLoading = () => dispatch({ type: 'SET_LOADING' });
@@ -42,7 +34,7 @@ const Repositories = ({ repos, dispatch, keyword, option, loading, error }) => {
                 }
                 isLoading = false;
                 setRepositories(repositories => [...repositories, ...items]);
-                dispatch({type: 'UPDATE_REPOS', repos: repositories});
+                dispatch({type: 'UPDATE_REPOS', repos: items});
 
                 setPage(page => page + 1);
             }
@@ -87,7 +79,7 @@ const Repositories = ({ repos, dispatch, keyword, option, loading, error }) => {
         return (
             <div>
                 <ul  className="card-list">
-               {repositories ? repositories.map((item, i) => {
+               {repositories ? repos.map((item, i) => {
                    return (
                     <li key={i} className="card" >
                        <Card data={item} />
@@ -108,7 +100,8 @@ const Repositories = ({ repos, dispatch, keyword, option, loading, error }) => {
     } else {
         return (
             <div>
-                <center><h2><b>No Results</b></h2></center>
+                {" "}
+                {/* <center><h2><b>No Results</b></h2></center> */}
             </div>
         )
     }

@@ -4,26 +4,15 @@ import { Waypoint } from "react-waypoint";
 import  useDebounced  from '../components/debounce/debounced';
 import axios from 'axios';
 
-const Users = ({ userprofile, dispatch, keyword, option, loading, error }) => {
+const Users = ({ githubClientId, githubClientSecret, userprofile, dispatch, keyword, option, loading, error }) => {
     const [users, setUsers] = useState([]);
     const [page, setPage] = useState(1);
     const [hasNextPage, setHasNextPage] = useState(true);
     const ITEMS_PER_PAGE = 20;
-    let githubClientId;
-    let githubClientSecret;
-    let isLoading;
-
-    if (process.env.NODE_ENV !== 'production') {
-        githubClientId = process.env.REACT_APP_GITHUB_CLIENT_ID;
-        githubClientSecret = process.env.REACT_APP_GITHUB_CLIENT_SECRET;
-      } else {
-        githubClientId = process.env.GITHUB_CLIENT_ID;
-        githubClientSecret = process.env.GITHUB_CLIENT_SECRET;
-      }
+    
+      let isLoading;
 
       let debounced = useDebounced(keyword);
-
-      console.log("debounce "+ debounced);      
 
       const setLoading = () => dispatch({ type: 'SET_LOADING' });
 
@@ -47,15 +36,14 @@ const Users = ({ userprofile, dispatch, keyword, option, loading, error }) => {
                 }
                 isLoading = false;
                 setUsers(users => [...users, ...items]);
-                dispatch({type: 'UPDATE_USERPROFILE', userprofile: users});
-
+                dispatch({type: 'UPDATE_USERPROFILE', userprofile: items});
                 setPage(page => page + 1);
             }
         });
       }  
 
       console.log('users '+ JSON.stringify(users));
-      console.log('userprofile '+  JSON.stringify(userprofile))
+      console.log('userprofile useres '+  JSON.stringify(userprofile))
 
         const loadMoreData = () => {
             if (page > 1) {
@@ -65,10 +53,7 @@ const Users = ({ userprofile, dispatch, keyword, option, loading, error }) => {
 
        
         useEffect(() => {
-
-       
-
-            if(debounced.length >= 3 && option == "users") {
+            if(debounced.length >= 3 && option === "users") {
                 userSearch();
                 setLoading();
                 isLoading = true;
@@ -123,7 +108,8 @@ const Users = ({ userprofile, dispatch, keyword, option, loading, error }) => {
     } else {
         return (
             <div>
-                <center><h2><b>No Results</b></h2></center>
+                {" "}
+                {/* <center><h2><b>No Results</b></h2></center> */}
             </div>
         )
     }
