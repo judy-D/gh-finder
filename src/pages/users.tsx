@@ -3,9 +3,34 @@ import Card from '../components/card/card';
 import { Waypoint } from "react-waypoint";
 import  useDebounced  from '../components/debounce/debounced';
 import axios from 'axios';
+import Loader from '../components/loader/loader';
+import ErrorImg from '../img/Octocat.png';
 
-const Users = ({ githubClientId, githubClientSecret, userprofile, dispatch, keyword, option, loading, error }) => {
-    const [users, setUsers] = useState([]);
+interface Item {
+    githubClientId: string,
+    githubClientSecret: string,
+    userprofile: any,
+    dispatch: any,
+    keyword: any,
+    option: string,
+    loading: boolean,
+    error: any
+}
+
+interface User {
+    total_count: number;
+    items: Array<string>;
+    url: string;
+    avatar_url: string;
+    login: string;
+  }
+interface Err {
+    message: string
+}
+
+const Users = ({ githubClientId, githubClientSecret, userprofile, dispatch, keyword, option, loading, error } : Item) => {
+    const [users, setUsers] = useState<User[]>([]);
+    const [errorMessage, setError] = useState<Err>({} as any);
     const [page, setPage] = useState(1);
     const [hasNextPage, setHasNextPage] = useState(true);
     const ITEMS_PER_PAGE = 20;
@@ -19,7 +44,7 @@ const Users = ({ githubClientId, githubClientSecret, userprofile, dispatch, keyw
       const token = '92e78fb8af455be1df1212314eb239d41e991ae6';
 
       const userSearch = async () => {     
-        
+      try {
         if (!hasNextPage) return;
 
         const searchUserURL = `https://api.github.com/search/users?q=${debounced}&client_id=${githubClientId}&client_secret=${githubClientSecret}&page=${page}&per_page=${ITEMS_PER_PAGE}`;
@@ -35,15 +60,21 @@ const Users = ({ githubClientId, githubClientSecret, userprofile, dispatch, keyw
                     setHasNextPage(false);
                 }
                 isLoading = false;
-                setUsers(users => [...users, ...items]);
+                setUsers((users) => [...users, ...items]);
                 dispatch({type: 'UPDATE_USERPROFILE', userprofile: items});
+                // setUsers(userprofile);
                 setPage(page => page + 1);
             }
         });
+      }  catch(err) {
+          isLoading = false;
+          console.log("err" + JSON.stringify(err));
+          setError(err);
+
+      }
+      
       }  
 
-      console.log('users '+ JSON.stringify(users));
-      console.log('userprofile useres '+  JSON.stringify(userprofile))
 
         const loadMoreData = () => {
             if (page > 1) {
@@ -53,32 +84,32 @@ const Users = ({ githubClientId, githubClientSecret, userprofile, dispatch, keyw
 
        
         useEffect(() => {
-            if(debounced.length >= 3 && option === "users") {
+            if(debounced?.length >= 3 && option === "users") {
                 userSearch();
                 setLoading();
                 isLoading = true;
-            } else if(debounced.length < 3) {
+            } else if(debounced?.length < 3) {
                 // reset array to remove old search results
                 users.splice(0, users.length);
                 dispatch({ type: 'CLEAR_RESULT' })
             }
         
         }, [option, debounced])
-    if(error) {
+    if(Object.entries(errorMessage).length !== 0) {
         return (
-            <div>
-                <center><h1>Error</h1></center><br />
+            <div style={{margin:'0 auto'}}>
+                <h1>Error...The requested page {option} is not working now.</h1><br />
+                <img src={ErrorImg} width="100" height="100" alt="" />
                 <div>
-                    {error.message}
+                    {errorMessage.message}
                 </div><br />
-                {JSON.stringify(error)}
             </div>
         )
     }
     else if(loading) {
         return (
             <div>
-                <h1><b><center>Loading...</center></b></h1>
+                <Loader />
             </div>
         )
     } 
@@ -86,10 +117,10 @@ const Users = ({ githubClientId, githubClientSecret, userprofile, dispatch, keyw
         return (
             <div>
                 <ul  className="card-list">
-                        {users ? users.map((item, i) => {
+                        {users ? users.map((item: User, i: any) => {
                             return (
                                 <li key={i} className="card" >
-                                <Card   data={item} />
+                                <Card token={token}  data={item} />
                                 </li>
                             )
                         }): ''}
@@ -98,7 +129,7 @@ const Users = ({ githubClientId, githubClientSecret, userprofile, dispatch, keyw
                         <Waypoint onEnter={loadMoreData}>
                             <h2 >
                                 Loading data{" "}
-                                {/* <FontAwesomeIcon icon="spinner" spin={true} /> */}
+                                <Loader />
                             </h2>
                         </Waypoint>
                     ):''}

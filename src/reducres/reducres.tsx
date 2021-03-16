@@ -1,3 +1,4 @@
+import { AnyAction } from "redux"
 
 let initialState = {
     searchKeyword: '',
@@ -8,7 +9,7 @@ let initialState = {
     isLoading: false
 }
 
-const reducer = (state = initialState, action) => {
+const reducer = (state = initialState, action: AnyAction) => {
     switch(action.type) {
         case 'UPDATE_KEYWORD':
             return {

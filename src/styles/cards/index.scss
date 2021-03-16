@@ -1,7 +1,6 @@
-/* Lazy Load Styles */
 .card-image {
 	display: block;
-	min-height: 20rem; /* layout hack */
+	min-height: 20rem; 
 	background: #fff center center no-repeat;
 	background-size: cover;
 }
@@ -9,16 +8,12 @@
 .card-image > img {
 	display: block;
 	width: 100%;
-	opacity: 0; /* visually hide the img element */
+	opacity: 0; 
 }
 
 .card-image.is-loaded {
-	filter: none; /* remove the blur on fullres image */
 	transition: filter 1s;
 }
-
-
-
 
 /* Layout Styles */
 html, body {
@@ -31,17 +26,18 @@ html, body {
 
 .card-list {
 	display: block;
-	margin: 1rem auto;
-	padding: 0;
-	font-size: 0;
-	text-align: center;
-	list-style: none;
+    margin: 1rem auto;
+    padding: 0px;
+    font-size: 0;
+    text-align: center;
+    list-style: none;
+
 }
 
 .card {
 	display: inline-block;
 	width: 90%;
-	max-width: 20rem;
+	max-width: 25rem;
 	margin: 1rem;
 	font-size: 1rem;
 	text-decoration: none;
