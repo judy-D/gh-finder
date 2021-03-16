@@ -66,7 +66,7 @@ const Repositories = ({ githubClientId, githubClientSecret, repos, dispatch, key
       
       }
       useEffect(() => {
-        if(debounced.length >= 3 && option == "repository") {
+        if(debounced.length >= 3 && option === "repository") {
             repoSearch();
             setLoading();
             isLoading = true;
@@ -83,7 +83,7 @@ const Repositories = ({ githubClientId, githubClientSecret, repos, dispatch, key
         }
     };
 
-    if(Object.entries(errorMessage).length !== 0) {
+    if(error || Object.entries(errorMessage).length !== 0) {
         return (
             <div style={{margin:'0 auto'}}>
             <h1>Error...The requested page {option} is not working now.</h1><br />
@@ -126,7 +126,6 @@ const Repositories = ({ githubClientId, githubClientSecret, repos, dispatch, key
         return (
             <div>
                 {" "}
-                {/* <center><h2><b>No Results</b></h2></center> */}
             </div>
         )
     }

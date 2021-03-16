@@ -1,5 +1,5 @@
 import './App.css';
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { connect } from 'react-redux';
 import {
   BrowserRouter as Router,
@@ -9,9 +9,8 @@ import {
 } from "react-router-dom";
 import Users from './pages/users';
 import Repositories from './pages/repository';
-import DropDown from './components/dropDown/DropDown';
+import DropDown from './components/dropDown/dropDown';
 import './styles/main.scss';
-import { useDispatch } from 'react-redux'
 
 
 interface Item {

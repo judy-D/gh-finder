@@ -40,9 +40,7 @@ const DropDown = ({ dispatch, history, keyword, option } : Props)  => {
     return (
         <div className={debounced.length >= 3 || keyword.length >= 3 ? "main-div result-dev" : "main-div center-div" }>
             <div className="main-wrap" style={{display:'flex',flexDirection:'column',justifyContent:'center'}} >
-            {/* <div style={{display:'flex',flexDirection:'row',justifyContent:'center'}}> */}
             <div className="inside-wrap" style={{display:'flex',flexDirection:'row'}}>
-               {/* <div style={{width:'30%', display:'inline-flex',justifyContent:'flex-start',marginBottom:'5px'}}> */}
                <div style={{display:'inline-flex',justifyContent:'flex-start',marginBottom:'5px'}}>
                <div>
                     <img src={Logo} width="45" height="45" alt="" />
@@ -54,10 +52,8 @@ const DropDown = ({ dispatch, history, keyword, option } : Props)  => {
                </div>
             </div>
             <div className="form-wrap" >
-                {/* <div style={{width:'30%', display:'inline-flex'}}> */}
                 <div style={{ display:'inline-flex'}}>
-
-                <input type="text" placeholder="Start typing to search .." defaultValue={keyword} onChange={onInputChange}/>
+                <input type="text" data-test="searchInput" placeholder="Start typing to search .." defaultValue={keyword} onChange={onInputChange}/>
                 {"  "}
                 <select defaultValue={option} onChange={onHandleChange}>
                     <option value="">Select</option>

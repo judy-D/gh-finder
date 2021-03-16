@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { Fragment, useEffect, useState, useRef } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 
 type Props = {
 	data: any,
@@ -12,12 +12,12 @@ interface Details {
 }
 
 const Card = ({ data, token }: Props) => {
-	const [user, setUser] = useState<Details[]>([]);
+	const [user, setUser] = useState<Details>([] as any);
 	const userMoreDetails = async () => {
 	try{
 		const searchUrl = data.url;
 	
-	await axios.get<Details[]>(searchUrl,
+	await axios.get<Details>(searchUrl,
 		{ 
 			headers: {
 			 'Authorization':`token ${token}`,
@@ -40,11 +40,11 @@ const Card = ({ data, token }: Props) => {
     return (
 		<Fragment>
 			{data.avatar_url ? 
-					<a className="card-image" href={`https://github.com/${data.login}`} target="_blank" style={{backgroundImage: `url(${data.avatar_url})`}} >
+					<a className="card-image" href={`https://github.com/${data.login}`} target="_blank"  rel="noreferrer" style={{backgroundImage: `url(${data.avatar_url})`}} >
 						<img src={data.avatar_url} alt="" />
 					</a>:''
 			}
-		<a className="card-description" href={data.url} target="_blank">
+		<a className="card-description" href={`https://github.com/${data.full_name}`} target="_blank"  rel="noreferrer">
 			{data.name ?
 				<ol>
 				{data.full_name ? 	<li> <b>Full Name:</b> {data.full_name}</li>:''} 
