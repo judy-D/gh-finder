@@ -11,8 +11,13 @@ interface Details {
 	email: string;
 }
 
+const simulateSlowNetworkRequest = () =>
+  new Promise(resolve => setTimeout(resolve, 2500));
+
+
 const Card = ({ data, token }: Props) => {
 	const [user, setUser] = useState<Details>([] as any);
+
 
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	const userMoreDetails = async () => {
@@ -36,9 +41,19 @@ const Card = ({ data, token }: Props) => {
 	}
 	}
 	useEffect(() => {
-		userMoreDetails();
+		let isCancelled = false;
+
+		simulateSlowNetworkRequest().then(() => {
+		  if (!isCancelled) {
+			userMoreDetails();
+		  }
+		});
+	
+		return () => {
+		  isCancelled = true;
+		};
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [user])
+	}, [])
 
     return (
 		<Fragment>

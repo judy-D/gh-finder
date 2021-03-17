@@ -71,7 +71,6 @@ const Repositories = ({ githubClientId, githubClientSecret, repos, dispatch, key
         if(debounced.length >= 3 && option === "repository") {
             repoSearch();
             setLoading();
-            // isLoading = true;
         } else if(debounced.length < 3) {
             // reset array to remove old search results
             repositories.splice(0, repositories.length);
