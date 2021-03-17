@@ -53,7 +53,7 @@ const Card = ({ data, token }: Props) => {
 		  isCancelled = true;
 		};
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [])
+	}, [data])
 
     return (
 		<Fragment>
