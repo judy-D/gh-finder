@@ -13,6 +13,8 @@ interface Details {
 
 const Card = ({ data, token }: Props) => {
 	const [user, setUser] = useState<Details>([] as any);
+
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	const userMoreDetails = async () => {
 	try{
 		const searchUrl = data.url;
@@ -35,7 +37,8 @@ const Card = ({ data, token }: Props) => {
 	}
 	useEffect(() => {
 		userMoreDetails();
-	}, [])
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [user])
 
     return (
 		<Fragment>

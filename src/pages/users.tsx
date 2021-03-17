@@ -35,7 +35,7 @@ const Users = ({ githubClientId, githubClientSecret, userprofile, dispatch, keyw
     const [hasNextPage, setHasNextPage] = useState(true);
     const ITEMS_PER_PAGE = 20;
     
-        
+      // eslint-disable-next-line  
       let isLoading;
 
       let debounced = useDebounced(keyword);
@@ -60,6 +60,7 @@ const Users = ({ githubClientId, githubClientSecret, userprofile, dispatch, keyw
                 if (total_count === users.length + items.length) {
                     setHasNextPage(false);
                 }
+                // eslint-disable-next-line
                 isLoading = false;
                 setUsers((users) => [...users, ...items]);
                 dispatch({type: 'UPDATE_USERPROFILE', userprofile: items});
@@ -68,7 +69,7 @@ const Users = ({ githubClientId, githubClientSecret, userprofile, dispatch, keyw
             }
         });
       }  catch(err) {
-          isLoading = false;
+        //   isLoading = false;
           console.log("err" + JSON.stringify(err));
           setError(err);
 
@@ -88,13 +89,13 @@ const Users = ({ githubClientId, githubClientSecret, userprofile, dispatch, keyw
             if(debounced?.length >= 3 && option === "users") {
                 userSearch();
                 setLoading();
-                isLoading = true;
+                // isLoading = true;
             } else if(debounced?.length < 3) {
                 // reset array to remove old search results
                 users.splice(0, users.length);
                 dispatch({ type: 'CLEAR_RESULT' })
             }
-        
+           // eslint-disable-next-line react-hooks/exhaustive-deps
         }, [option, debounced])
     if(Object.entries(errorMessage).length !== 0) {
         return (
@@ -126,7 +127,7 @@ const Users = ({ githubClientId, githubClientSecret, userprofile, dispatch, keyw
                             )
                         }): ''}
                </ul>
-               {users.length != 0 ?  hasNextPage && (
+               {users.length !== 0 ?  hasNextPage && (
                         <Waypoint onEnter={loadMoreData}>
                             <h2 >
                                 Loading data{" "}

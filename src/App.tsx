@@ -1,5 +1,4 @@
 import './App.css';
-import { useEffect } from 'react'
 import { connect } from 'react-redux';
 import {
   BrowserRouter as Router,
@@ -36,9 +35,6 @@ function App({ dispatch, searchKeyword, searchOption, isLoading, userprofile, re
     githubClientSecret = process.env.GITHUB_CLIENT_SECRET!;
   }
   
-  useEffect(() => {
-    console.log("userprofile " + JSON.stringify(userprofile));
-  }, [])
 
   return (
     <div >

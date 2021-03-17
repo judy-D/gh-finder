@@ -7,12 +7,12 @@ const useDebounced = ( value : string) => {
     useEffect(() => {
   
         let timeoutId = setTimeout(() => {
-          console.log('Setting the value ' + value?.length)
+          // console.log('Setting the value ' + value?.length)
           setDebouncedValue(value);
         }, 500);
     
         return () => {
-          console.log('Reset value')
+          // console.log('Reset value')
           clearTimeout(timeoutId)
         }
      

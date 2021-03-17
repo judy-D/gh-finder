@@ -29,6 +29,7 @@ const Repositories = ({ githubClientId, githubClientSecret, repos, dispatch, key
     const [hasNextPage, setHasNextPage] = useState(true);
     const ITEMS_PER_PAGE = 20;
   
+      // eslint-disable-next-line    
       let isLoading;
   
       let debounced = useDebounced(keyword);
@@ -51,6 +52,7 @@ const Repositories = ({ githubClientId, githubClientSecret, repos, dispatch, key
                     if (total_count === repositories.length + items.length) {
                         setHasNextPage(false);
                     }
+                    // eslint-disable-next-line
                     isLoading = false;
                     setRepositories((repositories: any) => [...repositories, ...items]);
                     dispatch({type: 'UPDATE_REPOS', repos: items});
@@ -59,7 +61,7 @@ const Repositories = ({ githubClientId, githubClientSecret, repos, dispatch, key
                 }
             });
         }  catch(err) {
-            isLoading = false;
+            // isLoading = false;
             console.log("err" + JSON.stringify(err));
             setError(err);
         }
@@ -69,13 +71,13 @@ const Repositories = ({ githubClientId, githubClientSecret, repos, dispatch, key
         if(debounced.length >= 3 && option === "repository") {
             repoSearch();
             setLoading();
-            isLoading = true;
+            // isLoading = true;
         } else if(debounced.length < 3) {
             // reset array to remove old search results
             repositories.splice(0, repositories.length);
             dispatch({ type: 'CLEAR_RESULT' })
         }
-    
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [option, debounced])  
       const loadMoreData = () => {
         if (page > 1) {
@@ -112,7 +114,7 @@ const Repositories = ({ githubClientId, githubClientSecret, repos, dispatch, key
                    )
                }): ''}
                </ul>
-               {repositories.length != 0 ?  hasNextPage && (
+               {repositories.length !== 0 ?  hasNextPage && (
                         <Waypoint onEnter={loadMoreData}>
                             <h2 >
                                 Loading data{" "} 
