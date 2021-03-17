@@ -40,13 +40,16 @@ const Repositories = ({ githubClientId, githubClientSecret, repos, dispatch, key
         try {
             if (!hasNextPage) return;
 
+            // to get access to more details, and fix API limit error, please generate a temporary token and add it to the header
+            // await axios.get(searchUserURL,
+            //     { 
+            //                 headers: {
+            //                  'Authorization':`token ${token}`,
+            //                    }
+            //              }
+            //     )
             const searchUserURL = `https://api.github.com/search/repositories?q=${debounced}&client_id=${githubClientId}&client_secret=${githubClientSecret}&page=${page}&per_page=${ITEMS_PER_PAGE}`;
-            await axios.get(searchUserURL,
-                { 
-                            headers: {
-                             'Authorization':`token ${token}`,
-                               }
-                         }
+            await axios.get(searchUserURL
                 ).then(({ data: { items, total_count } }) => {
                 if (items) {
                     if (total_count === repositories.length + items.length) {

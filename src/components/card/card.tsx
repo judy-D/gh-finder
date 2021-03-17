@@ -23,13 +23,16 @@ const Card = ({ data, token }: Props) => {
 	const userMoreDetails = async () => {
 	try{
 		const searchUrl = data.url;
+		// to get access to more details, and fix API limit error, please generate a temporary token and add it to the header 
+    	// await axios.get(searchUserURL,
+        //     { 
+        //                 headers: {
+    	//                  'Authorization':`token ${token}`,
+        //                    }
+        //              }
+        //     )
 	
-	await axios.get<Details>(searchUrl,
-		{ 
-			headers: {
-			'Authorization':`token ${token}`,
-					 }
-		   }
+	await axios.get<Details>(searchUrl
 		).then((details) => {
 			
 		setUser(details.data)

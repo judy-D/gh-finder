@@ -48,7 +48,7 @@ const Users = ({ githubClientId, githubClientSecret, userprofile, dispatch, keyw
       try {
         if (!hasNextPage) return;
 
-        // To fix the error of limited APIs request, you can generate a temporary like this
+        // to get access to more details, and fix API limit error, please generate a temporary token and add it to the header
         // await axios.get(searchUserURL,
         //     { 
         //                 headers: {
@@ -57,12 +57,7 @@ const Users = ({ githubClientId, githubClientSecret, userprofile, dispatch, keyw
         //              }
         //     )
         const searchUserURL = `https://api.github.com/search/users?q=${debounced}&client_id=${githubClientId}&client_secret=${githubClientSecret}&page=${page}&per_page=${ITEMS_PER_PAGE}`;
-        await axios.get(searchUserURL,
-                       { 
-                        headers: {
-                        'Authorization':`token ${token}`,
-                                 }
-                       }
+        await axios.get(searchUserURL
             ).then(({ data: { items, total_count } }) => {
             if (items) {
                 if (total_count === users.length + items.length) {
