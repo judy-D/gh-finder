@@ -42,19 +42,27 @@ const Users = ({ githubClientId, githubClientSecret, userprofile, dispatch, keyw
 
       const setLoading = () => dispatch({ type: 'SET_LOADING' });
 
-      const token = '92e78fb8af455be1df1212314eb239d41e991ae6';
+      const token = '3f99d7bf4d4a26bb2efcb65d5c2ac9184f180be6';
 
       const userSearch = async () => {     
       try {
         if (!hasNextPage) return;
 
+        // To fix the error of limited APIs request, you can generate a temporary like this
+        // await axios.get(searchUserURL,
+        //     { 
+        //                 headers: {
+        //                  'Authorization':`token ${token}`,
+        //                    }
+        //              }
+        //     )
         const searchUserURL = `https://api.github.com/search/users?q=${debounced}&client_id=${githubClientId}&client_secret=${githubClientSecret}&page=${page}&per_page=${ITEMS_PER_PAGE}`;
         await axios.get(searchUserURL,
-            { 
+                       { 
                         headers: {
-                         'Authorization':`token ${token}`,
-                           }
-                     }
+                        'Authorization':`token ${token}`,
+                                 }
+                       }
             ).then(({ data: { items, total_count } }) => {
             if (items) {
                 if (total_count === users.length + items.length) {

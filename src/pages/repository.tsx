@@ -35,7 +35,7 @@ const Repositories = ({ githubClientId, githubClientSecret, repos, dispatch, key
       let debounced = useDebounced(keyword);
 
       const setLoading = () => dispatch({ type: 'SET_LOADING' });
-      const token = '92e78fb8af455be1df1212314eb239d41e991ae6';
+      const token = '3f99d7bf4d4a26bb2efcb65d5c2ac9184f180be6';
       const repoSearch = async () => {     
         try {
             if (!hasNextPage) return;
@@ -90,7 +90,7 @@ const Repositories = ({ githubClientId, githubClientSecret, repos, dispatch, key
             <h1>Error...The requested page {option} is not working now.</h1><br />
             <img src={ErrorImg} width="100" height="100" alt="" />
             <div>
-                {errorMessage.message}
+                {errorMessage.message || error.message}
             </div><br />
         </div>
         )

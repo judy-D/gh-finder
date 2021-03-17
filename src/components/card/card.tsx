@@ -27,9 +27,9 @@ const Card = ({ data, token }: Props) => {
 	await axios.get<Details>(searchUrl,
 		{ 
 			headers: {
-			 'Authorization':`token ${token}`,
-			   }
-		 }
+			'Authorization':`token ${token}`,
+					 }
+		   }
 		).then((details) => {
 			
 		setUser(details.data)
